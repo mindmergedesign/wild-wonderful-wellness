@@ -1,4 +1,5 @@
-# Astro + Tailwind CSS + Sanity CMS Boilerplate
+# Wild And Wonderful Wellness website
+https://www.wildandwonderfulwellness.com
 
 A modern, production-ready starter template for building fast, content-driven websites with Astro 5, Tailwind CSS v4, and Sanity CMS.
 
