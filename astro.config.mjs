@@ -9,7 +9,7 @@ import favicons from 'astro-favicons';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://www.sitedomain.com',
+	site: 'https://www.wildandwonderfulwellness.com',
   output: 'server',
   image: {
     domains: ['cdn.sanity.io']
