@@ -8,9 +8,9 @@ import { structure } from './structure';
 
 export default defineConfig({
   name: 'default',
-  title: 'Studio',
+  title: 'Wild & Wonderful Wellness',
 
-  projectId: 'f732bn2a',
+  projectId: 'v8ngbpl7',
   dataset: 'production',
   studioUrl: '/studio',
 

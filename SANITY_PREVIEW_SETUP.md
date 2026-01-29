@@ -28,7 +28,7 @@ cp .env.example .env
 ### 2. Get Your Sanity API Token
 
 1. Go to [Sanity Manage](https://www.sanity.io/manage)
-2. Select your project (`f732bn2a`)
+2. Select your project (`v8ngbpl7`)
 3. Navigate to **API** → **Tokens**
 4. Click **Add API token**
 5. Give it a name (e.g., "Preview Token")
