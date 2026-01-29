@@ -1,0 +1,34 @@
+---
+import PageBuilder from './PageBuilder.astro'
+import Container from '@/components/layout/Container.astro'
+import Section from '@/components/layout/Section.astro'
+
+const { block } = Astro.props
+
+// Extract section properties
+const title = block?.title
+const backgroundColor = block?.backgroundColor || 'default'
+const content = block?.content || []
+
+// Map background colors to CSS classes
+const backgroundClasses: Record<string, string> = {
+	default: '',
+	light: 'section-muted',
+	dark: 'section-secondary',
+	primary: 'section-primary'
+}
+
+// Use type assertion or provide a fallback for safety
+const bgClass =
+	backgroundClasses[backgroundColor as keyof typeof backgroundClasses] || backgroundClasses.default
+---
+
+<Section class={`${bgClass}`}>
+	<Container>
+		{title && <h2 class="text-center">{title}</h2>}
+
+		<div class="section-content">
+			<PageBuilder pageBuilder={content} />
+		</div>
+	</Container>
+</Section>

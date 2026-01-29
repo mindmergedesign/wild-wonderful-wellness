@@ -1,0 +1,10 @@
+---
+import PortableText from '@/components/elements/content/PortableText.astro'
+
+const { block } = Astro.props
+const { class: className, ...rest } = Astro.props
+---
+
+<div class="mx-auto max-w-2xl">
+	<PortableText portableText={block?.content} />
+</div>

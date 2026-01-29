@@ -1,0 +1,140 @@
+---
+// Packages
+import { AlignJustify, X } from 'lucide-astro'
+
+// Components
+import Logo from './Logo.astro'
+import ThemeToggle from '@/components/elements/interactive/ThemeToggle.astro'
+import { navigationConfig } from '@/components/config/navigation'
+
+// Misc
+const { pathname, ...rest } = Astro.props
+---
+
+<nav class="w-full">
+	<div class="mobile-menu-container">
+		<div class="flex justify-between">
+			<div class="flex w-full justify-between">
+				<div class="block w-28 self-center py-3 md:w-36">
+					<a href="/" class="w-full" aria-label="Home">
+						<Logo class="text-foreground" />
+					</a>
+				</div>
+				<div class="hidden w-full justify-end sm:ml-6 sm:flex sm:items-center sm:space-x-3">
+					{
+						navigationConfig
+							.map(({ label, href }) => (
+								<a
+									href={href}
+									class={
+										pathname === href || (href !== '/' && pathname.startsWith(href))
+											? 'active text-foreground hover:text-foreground relative inline-flex cursor-pointer items-center px-3 pt-1 font-medium transition-all ease-in-out before:absolute before:bottom-0 before:left-[50%] before:h-[2px] before:w-0 before:origin-center before:bg-gray-400 before:transition-[width] before:duration-700 before:ease-in-out after:absolute after:right-[50%] after:bottom-0 after:h-[2px] after:w-0 after:origin-center after:bg-gray-400 after:transition-[width] after:duration-700 after:ease-in-out hover:before:w-[50%] hover:after:w-[50%]'
+											: 'text-foreground hover:text-foreground relative inline-flex cursor-pointer items-center px-3 pt-1 font-medium transition-all ease-in-out before:absolute before:bottom-0 before:left-[50%] before:h-[2px] before:w-0 before:origin-center before:bg-gray-400 before:transition-[width] before:duration-700 before:ease-in-out after:absolute after:right-[50%] after:bottom-0 after:h-[2px] after:w-0 after:origin-center after:bg-gray-400 after:transition-[width] after:duration-700 after:ease-in-out hover:before:w-[50%] hover:after:w-[50%]'
+									}
+								>
+									{label}
+								</a>
+							))
+							.slice(1)
+					}
+					<ThemeToggle />
+				</div>
+			</div>
+
+			<div class="-mr-2 flex items-center gap-2 sm:hidden">
+				<ThemeToggle />
+				{/* Mobile menu button */}
+				<button
+					id="mobile-menu-button"
+					type="button"
+					aria-label="Toggle mobile menu"
+					aria-expanded="false"
+					aria-controls="mobile-menu-panel"
+					class="text-foreground hover:bg-muted inline-flex cursor-pointer items-center justify-center rounded-md p-2 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none focus:ring-inset"
+				>
+					<span class="sr-only">Toggle main menu</span>
+					<X class="text-foreground hidden" id="close-icon" aria-hidden="true" />
+					<AlignJustify class="text-foreground" id="menu-icon" aria-hidden="true" />
+				</button>
+			</div>
+		</div>
+
+		<div
+			class="animate-slide-down hidden sm:hidden"
+			id="mobile-menu-panel"
+			role="navigation"
+			aria-label="Mobile navigation"
+		>
+			<div class="bg-background -mx-4 space-y-1 pt-3">
+				{
+					navigationConfig.map(({ label, href }) => (
+						<a
+							href={href}
+							class={
+								pathname === href || (href !== '/' && pathname.startsWith(href))
+									? 'active border-primary text-foreground block border-l-4 py-2 pr-4 pl-3 text-base font-medium'
+									: 'text-foreground block border-l-4 border-stone-600 py-2 pr-4 pl-3 text-base font-medium'
+							}
+						>
+							{label}
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</div>
+</nav>
+
+<script>
+	document.addEventListener('astro:page-load', () => {
+		const mobileMenuButton = document.getElementById('mobile-menu-button')
+		const mobileMenuPanel = document.getElementById('mobile-menu-panel')
+		const menuIcon = document.getElementById('menu-icon')
+		const closeIcon = document.getElementById('close-icon')
+
+		// Guard clause to ensure all elements exist
+		if (!mobileMenuButton || !mobileMenuPanel || !menuIcon || !closeIcon) {
+			return
+		}
+
+		const mobileMenuButtonEl = mobileMenuButton as HTMLButtonElement
+		const mobileMenuPanelEl = mobileMenuPanel as HTMLElement
+		const menuIconEl = menuIcon as HTMLElement
+		const closeIconEl = closeIcon as HTMLElement
+
+		let isMenuOpen = false
+
+		// Function to toggle the mobile menu
+		function toggleMobileMenu() {
+			isMenuOpen = !isMenuOpen
+
+			if (isMenuOpen) {
+				mobileMenuPanelEl.classList.remove('hidden')
+				menuIconEl.classList.add('hidden')
+				closeIconEl.classList.remove('hidden')
+				mobileMenuButtonEl.setAttribute('aria-expanded', 'true')
+				mobileMenuButtonEl.setAttribute('aria-label', 'Close mobile menu')
+			} else {
+				mobileMenuPanelEl.classList.add('hidden')
+				menuIconEl.classList.remove('hidden')
+				closeIconEl.classList.add('hidden')
+				mobileMenuButtonEl.setAttribute('aria-expanded', 'false')
+				mobileMenuButtonEl.setAttribute('aria-label', 'Open mobile menu')
+			}
+		}
+
+		// Add click event listener to the mobile menu button
+		mobileMenuButtonEl.addEventListener('click', toggleMobileMenu)
+
+		// Close the menu when clicking outside
+		document.addEventListener('click', (event) => {
+			const container = document.querySelector('.mobile-menu-container')
+			const target = event.target as Node
+
+			// Check if the click was outside the mobile menu container
+			if (isMenuOpen && container && !container.contains(target)) {
+				toggleMobileMenu()
+			}
+		})
+	})
+</script>

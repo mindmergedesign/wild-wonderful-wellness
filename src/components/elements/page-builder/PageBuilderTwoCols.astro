@@ -1,0 +1,9 @@
+---
+// Packages
+import TwoCols from '@/components/elements/content/TwoCols.astro'
+
+// Misc
+const { block, class: className, ...rest } = Astro.props
+---
+
+<TwoCols cols={block} />

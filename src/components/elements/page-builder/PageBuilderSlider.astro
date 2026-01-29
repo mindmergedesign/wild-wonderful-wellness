@@ -1,0 +1,15 @@
+---
+import PhotoCarousel from '@/components/elements/media/PhotoCarousel.astro'
+import type { ImageGallery } from '@/sanity/schemaTypes/imageGallery'
+
+interface Props {
+	block: ImageGallery
+	class?: string
+}
+
+const { block, class: className } = Astro.props as Props
+---
+
+<div class="my-3! md:my-6!">
+	<PhotoCarousel gallery={block} />
+</div>

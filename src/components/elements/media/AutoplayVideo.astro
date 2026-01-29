@@ -1,0 +1,36 @@
+---
+// Misc
+const { class: className, videoUrl, ...rest } = Astro.props
+---
+
+<div class="relative aspect-square w-full! bg-zinc-50 md:aspect-video md:h-full!">
+	<video
+		width="1280"
+		height="720"
+		autoplay
+		muted
+		loop
+		playsinline
+		preload="auto"
+		class="my-0! h-full! w-full! object-cover py-0!"
+		aria-label="Decorative background video"
+		role="img"
+	>
+		<source src={videoUrl} type="video/mp4" />
+
+		Your browser does not support the video tag.
+	</video>
+	<noscript>
+		<style>
+			video {
+				display: none;
+			}
+			video + .js-required {
+				display: block;
+			}
+		</style>
+		<div class="js-required" style="display: none;">
+			<p>Please enable JavaScript to view this video.</p>
+		</div>
+	</noscript>
+</div>

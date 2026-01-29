@@ -1,0 +1,17 @@
+---
+// Components
+import Container from '@/components/layout/Container.astro'
+
+// Misc
+const { class: className, textColor = 'text-foreground', ...rest } = Astro.props
+---
+
+<div
+	class={`relative overflow-hidden w-full prose max-w-none prose-h1:mb-0 prose-p:max-w-lg bg-muted ${className}`}
+>
+	<Container class="relative z-20 py-24 md:py-32">
+		<div class={`max-w-xl ${textColor}`}>
+			<slot />
+		</div>
+	</Container>
+</div>

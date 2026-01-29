@@ -1,0 +1,46 @@
+---
+// Packages
+import { urlForImage } from '@/sanity/lib/urlForImage'
+import { Image } from 'astro:assets'
+
+// Components
+import PortableText from './PortableText.astro'
+import type { ImageAndText as ImageAndTextType } from '@/sanity/schemaTypes/imageAndText'
+
+interface Props {
+	content: ImageAndTextType
+	class?: string
+}
+
+// Misc
+const { content, class: className } = Astro.props as Props
+---
+
+<div class={`grid grid-cols-6 gap-9 ${className}`}>
+	<div class="col-a col-span-6 md:col-span-3">
+		<PortableText portableText={content?.text} />
+		<slot name="content" />
+	</div>
+
+	<div class="col-b col-span-6 md:col-span-3">
+		{
+			content?.image && (
+				<Image
+					src={`${urlForImage(content.image).quality(60).url()}`}
+					alt={content.image.alt || 'Decorative image'}
+					width={1200}
+					height={800}
+					class="bg-muted aspect-4/3 object-cover"
+					loading={'eager'}
+				/>
+			)
+		}
+		{
+			content?.image?.credits && (
+				<div class="mt-0! text-sm text-gray-500">{content.image.credits}</div>
+			)
+		}
+
+		<slot name="image" />
+	</div>
+</div>

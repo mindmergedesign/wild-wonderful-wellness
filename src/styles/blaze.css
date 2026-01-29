@@ -1,0 +1,77 @@
+/* fix layout shifts */
+
+.blaze-slider.my-slider {
+	--slides-to-show: 3;
+	--slide-gap: 20px;
+}
+
+@media (max-width: 900px) {
+	.blaze-slider.my-slider {
+		--slides-to-show: 2;
+	}
+}
+
+@media (max-width: 500px) {
+	.blaze-slider.my-slider {
+		--slides-to-show: 1;
+	}
+}
+
+/* other styles */
+
+.blaze-slider.dragging .blaze-track {
+	cursor: grabbing;
+}
+
+.blaze-track > * {
+	min-height: 300px;
+	display: flex;
+	font-size: 30px;
+	justify-content: center;
+	align-items: center;
+	transition: width 300ms ease;
+}
+
+/* pagination buttons */
+
+.blaze-pagination {
+	display: flex;
+	padding: 1em 0;
+	gap: 15px;
+}
+
+.blaze-pagination button {
+	font-size: 0;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	outline: none;
+	border: none;
+	background: rgba(255, 255, 255, 0.5);
+	cursor: pointer;
+	transition:
+		transform 200ms ease,
+		background-color 300ms ease;
+}
+
+.blaze-pagination button.active {
+	background: white;
+	transform: scale(1.3);
+}
+
+.blaze-next,
+.blaze-prev {
+	background: none;
+	cursor: pointer;
+}
+
+.blaze-next {
+	transform: rotate(180deg);
+}
+
+/* for loop: false */
+.blaze-slider.start .blaze-prev,
+.blaze-slider.end .blaze-next {
+	opacity: 0.5;
+	cursor: not-allowed;
+}

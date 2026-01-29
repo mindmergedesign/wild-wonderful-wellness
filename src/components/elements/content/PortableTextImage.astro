@@ -1,0 +1,28 @@
+---
+// Packages
+import { urlForImage } from '@/sanity/lib/urlForImage'
+import { Image } from 'astro:assets'
+
+// Misc
+const node = Astro.props.node
+
+// Handle both legacy format and new imageAlt format
+const url = node.asset
+	? urlForImage(node.asset).width(800).url()
+	: urlForImage(node).width(800).url()
+
+// Get alt text from the appropriate field
+// Use empty string for decorative images (no alt text provided)
+const altText = node.alt || node.asset?.alt || ''
+
+// Get credits if available
+const credits = node.credits || node.asset?.credits
+---
+
+<div class="my-4">
+	<picture>
+		<Image src={url} inferSize alt={altText} class="responsive__img" loading="lazy" />
+	</picture>
+
+	{credits && <div class="mt-2 text-sm text-gray-500">{credits}</div>}
+</div>

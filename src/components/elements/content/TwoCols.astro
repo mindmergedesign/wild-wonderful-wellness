@@ -1,0 +1,27 @@
+---
+//Components
+import PortableText from './PortableText.astro'
+
+//Types
+import type { TwoCols } from '@/sanity/schemaTypes/twoCols'
+
+interface Props {
+	cols: TwoCols
+	class?: string
+}
+
+const { cols, class: className } = Astro.props as Props
+---
+
+<div class={`grid grid-cols-6 gap-9 ${className}`}>
+	<div class="col-a col-span-6 md:col-span-3">
+		<PortableText portableText={cols?.contentLeft} />
+		<slot name="cl" />
+	</div>
+
+	<div class="col-b col-span-6 md:col-span-3">
+		<PortableText portableText={cols?.contentRight} />
+
+		<slot name="cr" />
+	</div>
+</div>

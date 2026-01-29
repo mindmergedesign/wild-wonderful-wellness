@@ -1,0 +1,631 @@
+---
+import Logo from '@/components/elements/navigation/Logo.astro'
+import Container from '@/components/layout/Container.astro'
+import Section from '@/components/layout/Section.astro'
+import { Button } from '@/components/starwind/button'
+import Layout from '@/layouts/Layout.astro'
+
+const lightStyle =
+	'--background: 0 0% 100%; --foreground: 0 0% 9%; --card: 0 0% 100%; --card-foreground: 0 0% 9%; --popover: 0 0% 100%; --popover-foreground: 0 0% 9%; --primary: 217 19% 38%; --primary-foreground: 0 0% 98%; --secondary: 222 7% 27%; --secondary-foreground: 0 0% 98%; --muted: 81 15% 90%; --muted-foreground: 0 0% 35%; --accent: 65 85% 55%; --accent-foreground: 0 0% 9%; --info: 198 93% 40%; --info-foreground: 0 0% 98%; --success: 142 76% 30%; --success-foreground: 0 0% 98%; --warning: 38 92% 45%; --warning-foreground: 0 0% 98%; --error: 0 84% 45%; --error-foreground: 0 0% 98%; --border: 0 0% 89.8%; --input: 0 0% 89.8%; --outline: 221 83% 53%; --radius: 0.5rem;'
+
+const darkStyle =
+	'--background: 0 0% 7%; --foreground: 0 0% 98%; --card: 0 0% 10%; --card-foreground: 0 0% 98%; --popover: 0 0% 10%; --popover-foreground: 0 0% 98%; --primary: 217 19% 70%; --primary-foreground: 0 0% 7%; --secondary: 222 7% 45%; --secondary-foreground: 0 0% 98%; --muted: 81 15% 18%; --muted-foreground: 0 0% 75%; --accent: 65 85% 70%; --accent-foreground: 0 0% 7%; --info: 198 93% 70%; --info-foreground: 0 0% 7%; --success: 142 76% 60%; --success-foreground: 0 0% 7%; --warning: 38 92% 70%; --warning-foreground: 0 0% 7%; --error: 0 84% 70%; --error-foreground: 0 0% 7%; --border: 0 0% 25%; --input: 0 0% 25%; --outline: 217 19% 70%; --radius: 0.5rem;'
+
+const buttonVariants = [
+	'default',
+	'primary',
+	'secondary',
+	'outline',
+	'ghost',
+	'info',
+	'success',
+	'warning',
+	'error'
+] as const
+
+const buttonSizes = ['sm', 'md', 'lg', 'icon'] as const
+
+const colorTokens = [
+	{
+		name: 'Background',
+		className: 'bg-background text-foreground border border-border',
+		code: 'bg-background text-foreground'
+	},
+	{
+		name: 'Foreground',
+		className: 'bg-foreground text-background',
+		code: 'bg-foreground text-background'
+	},
+	{
+		name: 'Card',
+		className: 'bg-card text-card-foreground border border-border',
+		code: 'bg-card text-card-foreground'
+	},
+	{
+		name: 'Popover',
+		className: 'bg-popover text-popover-foreground border border-border',
+		code: 'bg-popover text-popover-foreground'
+	},
+	{
+		name: 'Primary',
+		className: 'bg-primary text-primary-foreground',
+		code: 'bg-primary text-primary-foreground'
+	},
+	{
+		name: 'Secondary',
+		className: 'bg-secondary text-secondary-foreground',
+		code: 'bg-secondary text-secondary-foreground'
+	},
+	{
+		name: 'Muted',
+		className: 'bg-muted text-muted-foreground',
+		code: 'bg-muted text-muted-foreground'
+	},
+	{
+		name: 'Accent',
+		className: 'bg-accent text-accent-foreground',
+		code: 'bg-accent text-accent-foreground'
+	},
+	{
+		name: 'Info',
+		className: 'bg-info text-info-foreground',
+		code: 'bg-info text-info-foreground'
+	},
+	{
+		name: 'Success',
+		className: 'bg-success text-success-foreground',
+		code: 'bg-success text-success-foreground'
+	},
+	{
+		name: 'Warning',
+		className: 'bg-warning text-warning-foreground',
+		code: 'bg-warning text-warning-foreground'
+	},
+	{
+		name: 'Error',
+		className: 'bg-error text-error-foreground',
+		code: 'bg-error text-error-foreground'
+	},
+	{
+		name: 'Border',
+		className: 'bg-background text-foreground border-2 border-border',
+		code: 'border-border'
+	},
+	{
+		name: 'Input',
+		className: 'bg-background text-foreground border-2 border-input',
+		code: 'border-input'
+	},
+	{
+		name: 'Outline',
+		className: 'bg-background text-foreground outline outline-2 outline-outline',
+		code: 'outline-outline'
+	}
+]
+---
+
+<Layout>
+	<main id="main-content">
+		<Section id="style-guide">
+			<Container>
+				<h1>Style Guide</h1>
+				<p class="intro">
+					A quick reference for the color system and typography defined in <code
+						>src/styles/global.css</code
+					>.
+				</p>
+
+				<h2>Logo</h2>
+				<div class="not-prose mt-6 grid gap-10">
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Light</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the light theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={lightStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="border-border bg-card rounded-md border p-6">
+								<div class="w-40 md:w-56">
+									<Logo class="text-foreground w-full" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Dark</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the dark theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={darkStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="border-border bg-card rounded-md border p-6">
+								<div class="w-40 md:w-56">
+									<Logo class="text-foreground w-full" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h2>Colors</h2>
+				<div class="not-prose mt-8 grid gap-10">
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Light</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the light theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={lightStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+								{
+									colorTokens.map((token) => (
+										<div class="border-border bg-card rounded-md border p-4">
+											<div
+												class={`flex items-center justify-between rounded-md px-3 py-2 ${token.className}`}
+											>
+												<span class="text-sm font-semibold">{token.name}</span>
+												<span class="text-xs opacity-80">Aa</span>
+											</div>
+											<div class="text-muted-foreground mt-2 font-mono text-xs">{token.code}</div>
+										</div>
+									))
+								}
+							</div>
+						</div>
+					</div>
+
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Dark</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the dark theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={darkStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+								{
+									colorTokens.map((token) => (
+										<div class="border-border bg-card rounded-md border p-4">
+											<div
+												class={`flex items-center justify-between rounded-md px-3 py-2 ${token.className}`}
+											>
+												<span class="text-sm font-semibold">{token.name}</span>
+												<span class="text-xs opacity-80">Aa</span>
+											</div>
+											<div class="text-muted-foreground mt-2 font-mono text-xs">{token.code}</div>
+										</div>
+									))
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h2>Buttons</h2>
+				<div class="not-prose mt-6 grid gap-10">
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Light</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the light theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={lightStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="border-border bg-card rounded-md border p-6">
+								<div class="flex flex-wrap gap-3">
+									{
+										buttonVariants.map((variant) => (
+											<Button variant={variant} size="md">
+												{variant}
+											</Button>
+										))
+									}
+									<Button variant="primary" size="md" disabled>disabled</Button>
+								</div>
+
+								<div class="mt-6 flex flex-wrap items-center gap-3">
+									{
+										buttonSizes.map((size) => (
+											<Button
+												variant="secondary"
+												size={size}
+												aria-label={size === 'icon' ? 'Icon button' : undefined}
+											>
+												{size === 'icon' ? 'B' : size}
+											</Button>
+										))
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Dark</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the dark theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={darkStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="border-border bg-card rounded-md border p-6">
+								<div class="flex flex-wrap gap-3">
+									{
+										buttonVariants.map((variant) => (
+											<Button variant={variant} size="md">
+												{variant}
+											</Button>
+										))
+									}
+									<Button variant="primary" size="md" disabled>disabled</Button>
+								</div>
+
+								<div class="mt-6 flex flex-wrap items-center gap-3">
+									{
+										buttonSizes.map((size) => (
+											<Button
+												variant="secondary"
+												size={size}
+												aria-label={size === 'icon' ? 'Icon button' : undefined}
+											>
+												{size === 'icon' ? 'B' : size}
+											</Button>
+										))
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h2>Forms</h2>
+				<div class="not-prose mt-6 grid gap-10">
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Light</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the light theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={lightStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<form class="grid gap-4">
+								<label class="grid gap-2">
+									<span class="text-sm font-semibold">Text input</span>
+									<input
+										type="text"
+										placeholder="Placeholder"
+										class="bg-background text-foreground border-input w-full rounded-md border px-3 py-2"
+									/>
+								</label>
+
+								<label class="grid gap-2">
+									<span class="text-sm font-semibold">Textarea</span>
+									<textarea
+										rows={3}
+										placeholder="Type here"
+										class="bg-background text-foreground border-input w-full rounded-md border px-3 py-2"
+									></textarea>
+								</label>
+
+								<label class="grid gap-2">
+									<span class="text-sm font-semibold">Select</span>
+									<select
+										class="bg-background text-foreground border-input w-full rounded-md border px-3 py-2"
+									>
+										<option>Option A</option>
+										<option>Option B</option>
+										<option>Option C</option>
+									</select>
+								</label>
+
+								<div class="flex flex-wrap gap-6">
+									<label class="flex items-center gap-2">
+										<input type="checkbox" class="border-input" />
+										<span class="text-sm">Checkbox</span>
+									</label>
+
+									<label class="flex items-center gap-2">
+										<input type="radio" name="radio-light" class="border-input" />
+										<span class="text-sm">Radio</span>
+									</label>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Dark</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the dark theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={darkStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<form class="grid gap-4">
+								<label class="grid gap-2">
+									<span class="text-sm font-semibold">Text input</span>
+									<input
+										type="text"
+										placeholder="Placeholder"
+										class="bg-background text-foreground border-input w-full rounded-md border px-3 py-2"
+									/>
+								</label>
+
+								<label class="grid gap-2">
+									<span class="text-sm font-semibold">Textarea</span>
+									<textarea
+										rows={3}
+										placeholder="Type here"
+										class="bg-background text-foreground border-input w-full rounded-md border px-3 py-2"
+									></textarea>
+								</label>
+
+								<label class="grid gap-2">
+									<span class="text-sm font-semibold">Select</span>
+									<select
+										class="bg-background text-foreground border-input w-full rounded-md border px-3 py-2"
+									>
+										<option>Option A</option>
+										<option>Option B</option>
+										<option>Option C</option>
+									</select>
+								</label>
+
+								<div class="flex flex-wrap gap-6">
+									<label class="flex items-center gap-2">
+										<input type="checkbox" class="border-input" />
+										<span class="text-sm">Checkbox</span>
+									</label>
+
+									<label class="flex items-center gap-2">
+										<input type="radio" name="radio-dark" class="border-input" />
+										<span class="text-sm">Radio</span>
+									</label>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<h2>Surfaces & Radius</h2>
+				<div class="not-prose mt-6 grid gap-10">
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Light</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the light theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={lightStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+								<div class="border-border bg-card text-card-foreground rounded-sm border p-4">
+									<div class="text-sm font-semibold">Card · rounded-sm</div>
+									<div class="text-muted-foreground mt-2 text-sm">bg-card text-card-foreground</div>
+								</div>
+
+								<div class="border-border bg-card text-card-foreground rounded-md border p-4">
+									<div class="text-sm font-semibold">Card · rounded-md</div>
+									<div class="text-muted-foreground mt-2 text-sm">bg-card text-card-foreground</div>
+								</div>
+
+								<div class="border-border bg-card text-card-foreground rounded-lg border p-4">
+									<div class="text-sm font-semibold">Card · rounded-lg</div>
+									<div class="text-muted-foreground mt-2 text-sm">bg-card text-card-foreground</div>
+								</div>
+
+								<div class="border-border bg-popover text-popover-foreground rounded-xl border p-4">
+									<div class="text-sm font-semibold">Popover · rounded-xl</div>
+									<div class="text-muted-foreground mt-2 text-sm">
+										bg-popover text-popover-foreground
+									</div>
+								</div>
+
+								<div
+									class="border-border bg-popover text-popover-foreground rounded-2xl border p-4"
+								>
+									<div class="text-sm font-semibold">Popover · rounded-2xl</div>
+									<div class="text-muted-foreground mt-2 text-sm">
+										bg-popover text-popover-foreground
+									</div>
+								</div>
+
+								<div
+									class="border-border bg-popover text-popover-foreground rounded-3xl border p-4"
+								>
+									<div class="text-sm font-semibold">Popover · rounded-3xl</div>
+									<div class="text-muted-foreground mt-2 text-sm">
+										bg-popover text-popover-foreground
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Dark</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the dark theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={darkStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+								<div class="border-border bg-card text-card-foreground rounded-sm border p-4">
+									<div class="text-sm font-semibold">Card · rounded-sm</div>
+									<div class="text-muted-foreground mt-2 text-sm">bg-card text-card-foreground</div>
+								</div>
+
+								<div class="border-border bg-card text-card-foreground rounded-md border p-4">
+									<div class="text-sm font-semibold">Card · rounded-md</div>
+									<div class="text-muted-foreground mt-2 text-sm">bg-card text-card-foreground</div>
+								</div>
+
+								<div class="border-border bg-card text-card-foreground rounded-lg border p-4">
+									<div class="text-sm font-semibold">Card · rounded-lg</div>
+									<div class="text-muted-foreground mt-2 text-sm">bg-card text-card-foreground</div>
+								</div>
+
+								<div class="border-border bg-popover text-popover-foreground rounded-xl border p-4">
+									<div class="text-sm font-semibold">Popover · rounded-xl</div>
+									<div class="text-muted-foreground mt-2 text-sm">
+										bg-popover text-popover-foreground
+									</div>
+								</div>
+
+								<div
+									class="border-border bg-popover text-popover-foreground rounded-2xl border p-4"
+								>
+									<div class="text-sm font-semibold">Popover · rounded-2xl</div>
+									<div class="text-muted-foreground mt-2 text-sm">
+										bg-popover text-popover-foreground
+									</div>
+								</div>
+
+								<div
+									class="border-border bg-popover text-popover-foreground rounded-3xl border p-4"
+								>
+									<div class="text-sm font-semibold">Popover · rounded-3xl</div>
+									<div class="text-muted-foreground mt-2 text-sm">
+										bg-popover text-popover-foreground
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h2>Focus & Accessibility</h2>
+				<p>Use <kbd>Tab</kbd> to navigate these elements and verify focus-visible outlines.</p>
+				<div class="not-prose mt-6 grid gap-10">
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Light</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the light theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={lightStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="border-border bg-card rounded-md border p-6">
+								<div class="flex flex-wrap items-center gap-3">
+									<a href="#style-guide" class="text-primary underline">Focusable link</a>
+									<Button variant="primary" size="md">Focusable button</Button>
+									<input
+										type="text"
+										placeholder="Focusable input"
+										class="bg-background text-foreground border-input w-64 rounded-md border px-3 py-2"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="grid gap-4">
+						<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+							<h3 class="m-0 text-xl font-semibold">Dark</h3>
+							<p class="text-muted-foreground m-0 text-sm">
+								Preview uses the dark theme CSS variables.
+							</p>
+						</div>
+
+						<div
+							style={darkStyle}
+							class="border-border bg-background text-foreground rounded-lg border p-6"
+						>
+							<div class="border-border bg-card rounded-md border p-6">
+								<div class="flex flex-wrap items-center gap-3">
+									<a href="#style-guide" class="text-primary underline">Focusable link</a>
+									<Button variant="primary" size="md">Focusable button</Button>
+									<input
+										type="text"
+										placeholder="Focusable input"
+										class="bg-background text-foreground border-input w-64 rounded-md border px-3 py-2"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h2>Typography</h2>
+				<p>
+					These examples are rendered inside the site’s default <code>.prose</code> wrapper and reflect
+					the typography rules in
+					<code>src/styles/global.css</code>.
+				</p>
+
+				<h3>Headings</h3>
+				<h1>Heading 1</h1>
+				<h2>Heading 2</h2>
+				<h3>Heading 3</h3>
+				<h4>Heading 4</h4>
+
+				<h3>Body</h3>
+				<p>
+					This is a paragraph with an <a href="#style-guide">inline link</a>. It should use <code
+						>text-foreground</code
+					> and the link should use <code>text-primary</code>.
+				</p>
+
+				<ul>
+					<li>Unordered list item one</li>
+					<li>Unordered list item two</li>
+					<li>Unordered list item three</li>
+				</ul>
+
+				<ol>
+					<li>Ordered list item one</li>
+					<li>Ordered list item two</li>
+					<li>Ordered list item three</li>
+				</ol>
+			</Container>
+		</Section>
+	</main>
+</Layout>

@@ -1,0 +1,8 @@
+---
+// Misc
+const { class: className, id, ...rest } = Astro.props
+---
+
+<section class={`py-20 md:py-24 relative ${className}`} id={id}>
+	<slot />
+</section>

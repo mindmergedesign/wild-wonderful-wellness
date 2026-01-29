@@ -1,0 +1,45 @@
+---
+export interface Props {
+	formId: string
+	title?: string
+	alignLeft?: boolean
+	hideTitle?: boolean
+	transparentBackground?: boolean
+	dynamicHeight?: boolean
+	width?: string
+	height?: string
+	class?: string
+}
+
+const {
+	formId,
+	title = 'Form',
+	alignLeft = true,
+	hideTitle = true,
+	transparentBackground = true,
+	dynamicHeight = true,
+	width = '100%',
+	height = '100',
+	class: className,
+	...rest
+} = Astro.props
+
+// Build the Tally embed URL with parameters
+const params = new URLSearchParams()
+if (alignLeft) params.append('alignLeft', '1')
+if (hideTitle) params.append('hideTitle', '1')
+if (transparentBackground) params.append('transparentBackground', '1')
+if (dynamicHeight) params.append('dynamicHeight', '1')
+
+const embedUrl = `https://tally.so/embed/${formId}?${params.toString()}`
+---
+
+<iframe
+	data-tally-src={embedUrl}
+	loading="lazy"
+	width={width}
+	height={height}
+	title={title}
+	class={className}
+	{...rest}></iframe>
+<script src="../../scripts/tallyEmbed.js"></script>

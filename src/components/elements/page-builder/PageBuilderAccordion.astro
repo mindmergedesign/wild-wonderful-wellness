@@ -1,0 +1,14 @@
+---
+// Packages
+import { Accordion } from '@/components/starwind/accordion'
+
+// Misc
+const { block, class: className, ...rest } = Astro.props
+---
+
+<div class="py-6 md:py-9">
+	<Accordion
+		accordionItems={block?.accordionItems}
+		class="prose-headings:text-current! prose-p:text-current! prose-li:text-current!"
+	/>
+</div>

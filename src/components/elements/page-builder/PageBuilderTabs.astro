@@ -1,0 +1,15 @@
+---
+// Components
+import { Tabs } from '@/components/starwind/tabs'
+
+// Misc
+const { block, class: className, ...rest } = Astro.props
+---
+
+<div class="py-6 md:py-9">
+	<Tabs
+		tabItems={block?.tabItems}
+		class="prose-headings:text-current! prose-p:text-current! prose-li:text-current!"
+		{...rest}
+	/>
+</div>

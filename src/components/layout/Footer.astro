@@ -1,0 +1,38 @@
+---
+// Components
+import Container from '@/components/layout/Container.astro'
+import { footerConfig } from '@/components/config/navigation'
+
+// Misc
+const d = new Date()
+const n = d.getFullYear()
+const { settings } = Astro.props
+---
+
+<footer
+	class="prose bg-primary text-primary-foreground/50 prose-a:text-primary-foreground/50 max-w-none py-6 text-sm"
+>
+	<Container>
+		{
+			footerConfig.showCopyright && (
+				<p>
+					&copy; {n} {settings?.siteName}
+				</p>
+			)
+		}
+
+		{
+			footerConfig.showCredit && footerConfig.creditUrl && (
+				<a
+					href={footerConfig.creditUrl}
+					class="no-underline"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{footerConfig.creditText}
+					<span class="sr-only">(opens in new tab)</span>
+				</a>
+			)
+		}
+	</Container>
+</footer>

@@ -1,0 +1,24 @@
+---
+import { urlForImage } from '@/sanity/lib/urlForImage'
+import type { ImageAlt } from '@/sanity/schemaTypes/imageAlt'
+import { Image } from 'astro:assets'
+
+interface Props {
+	block: ImageAlt
+	class?: string
+}
+
+const { block, class: className } = Astro.props as Props
+---
+
+<div class="my-3! md:my-6!">
+	<Image
+		src={`${urlForImage(block?.image).quality(60).url()}`}
+		alt={block?.image?.alt || 'Decorative image'}
+		width={1200}
+		height={800}
+		class="bg-muted my-0! aspect-4/3 object-cover"
+		loading={'eager'}
+	/>
+	{block?.credits && <div class="mt-0! text-sm text-gray-500">{block.credits}</div>}
+</div>

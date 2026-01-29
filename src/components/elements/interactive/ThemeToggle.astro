@@ -1,0 +1,95 @@
+---
+// Packages
+import { Moon, Sun } from 'lucide-astro'
+
+// Misc
+const { class: className, ...rest } = Astro.props
+---
+
+<button
+	data-theme-toggle
+	type="button"
+	aria-label="Toggle dark mode"
+	class={`theme-toggle-btn inline-flex items-center justify-center rounded-md p-2 transition-colors hover:bg-muted focus:outline-2 focus:outline-offset-2 focus:outline-outline ${className}`}
+	{...rest}
+>
+	<Sun
+		class="h-5 w-5 scale-100 rotate-0 transition-all dark:scale-0 dark:rotate-90"
+		aria-hidden="true"
+	/>
+	<Moon
+		class="absolute h-5 w-5 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
+		aria-hidden="true"
+	/>
+	<span class="sr-only">Toggle theme</span>
+</button>
+
+<script>
+	// Function to get the current theme
+	function getTheme() {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme')
+		}
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			return 'dark'
+		}
+		return 'light'
+	}
+
+	// Function to set the theme
+	function setTheme(theme: string | null) {
+		const root = document.documentElement
+		if (theme === 'dark') {
+			root.classList.add('dark')
+		} else {
+			root.classList.remove('dark')
+		}
+		if (theme) {
+			localStorage.setItem('theme', theme)
+		}
+	}
+
+	// Initialize theme on page load
+	function initTheme() {
+		const theme = getTheme()
+		setTheme(theme)
+	}
+
+	// Toggle theme function
+	function toggleTheme() {
+		const currentTheme = getTheme()
+		const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+		setTheme(newTheme)
+
+		// Update all theme toggle buttons aria-label
+		const buttons = document.querySelectorAll('[data-theme-toggle]')
+		buttons.forEach((button) => {
+			button.setAttribute(
+				'aria-label',
+				newTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+			)
+		})
+	}
+
+	// Run on initial page load
+	document.addEventListener('astro:page-load', () => {
+		initTheme()
+
+		// Get all theme toggle buttons
+		const buttons = document.querySelectorAll('[data-theme-toggle]')
+		const currentTheme = getTheme()
+
+		buttons.forEach((button) => {
+			// Update aria-label based on current theme
+			button.setAttribute(
+				'aria-label',
+				currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+			)
+			// Add click event listener
+			button.addEventListener('click', toggleTheme)
+		})
+	})
+
+	// Also run immediately for non-SPA navigation
+	initTheme()
+</script>

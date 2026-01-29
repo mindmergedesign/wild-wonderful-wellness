@@ -1,0 +1,61 @@
+---
+import PageBuilderAccordion from '@/components/elements/page-builder/PageBuilderAccordion.astro'
+import PageBuilderContent from '@/components/elements/page-builder/PageBuilderContent.astro'
+import PageBuilderImage from '@/components/elements/page-builder/PageBuilderImage.astro'
+import PageBuilderSection from '@/components/elements/page-builder/PageBuilderSection.astro'
+import PageBuilderSlider from '@/components/elements/page-builder/PageBuilderSlider.astro'
+import PageBuilderTabs from '@/components/elements/page-builder/PageBuilderTabs.astro'
+import PageBuilderTextAndImage from '@/components/elements/page-builder/PageBuilderTextAndImage.astro'
+import PageBuilderTwoCols from '@/components/elements/page-builder/PageBuilderTwoCols.astro'
+import PageBuilderVideo from '@/components/elements/page-builder/PageBuilderVideo.astro'
+
+// Define a type for the block
+interface Block {
+	_type: string
+	[key: string]: any
+}
+
+// Define the Props interface for the PageBuilder component
+interface Props {
+	pageBuilder?: Block[]
+	type?: string
+}
+
+// Components mapping - using any to bypass TypeScript's strict checking
+// This is necessary because each component has its own specific Props interface
+const Components = {
+	accordion: PageBuilderAccordion,
+	content: PageBuilderContent,
+	pageBuilderContent: PageBuilderContent,
+	slider: PageBuilderSlider,
+	imageGallery: PageBuilderSlider,
+	imageAlt: PageBuilderImage,
+	section: PageBuilderSection,
+	textAndImage: PageBuilderTextAndImage,
+	imageAndText: PageBuilderTextAndImage,
+	tabs: PageBuilderTabs,
+	twoCols: PageBuilderTwoCols,
+	video: PageBuilderVideo,
+	videoEmbed: PageBuilderVideo
+}
+
+// Props passed to the Astro component
+const { type, pageBuilder } = Astro.props as Props
+---
+
+<Fragment>
+	{
+		pageBuilder?.map((block: Block) => {
+			const Component = Components[block?._type as keyof typeof Components]
+			if (Component) {
+				return <Component block={block} type={type} />
+			} else {
+				return (
+					<div style="border: 2px dashed red; padding: 1rem; margin: 1rem 0;">
+						<p>Missing component for block type: {block?._type}</p>
+					</div>
+				)
+			}
+		})
+	}
+</Fragment>

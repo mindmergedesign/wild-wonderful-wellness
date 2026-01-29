@@ -1,0 +1,65 @@
+---
+// Packages
+import { Icon } from 'astro-icon/components'
+
+// Misc
+interface Props {
+	settings: {
+		socialMedia: {
+			socialSite: string
+			socialUrl: string
+		}[]
+	}
+	class?: string
+}
+
+const { settings, class: className } = Astro.props as Props
+---
+
+<ul class={`m-0 flex items-center p-0 ${className}`} role="list">
+	{
+		settings?.socialMedia?.map(({ ...social }) => {
+			const siteName =
+				social?.socialSite.charAt(0).toUpperCase() + social?.socialSite.slice(1).replace('-', ' ')
+			return (
+				<li class="mr-3 w-9 list-none p-0 text-center last:mr-0">
+					<a
+						href={social?.socialUrl}
+						aria-label={`Visit our ${siteName} page`}
+						class="hover:text-primary text-current"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{social?.socialSite == 'facebook' ? (
+							<Icon name="social-facebook" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'twitter' ? (
+							<Icon name="social-x-twitter" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'tik-tok' ? (
+							<Icon name="social-tik-tok" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'linkedin' ? (
+							<Icon name="social-linkedIn" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'pinterest' ? (
+							<Icon name="social-pinterest" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'youtube' ? (
+							<Icon name="social-youtube" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'instagram' ? (
+							<Icon name="social-instagram" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'vimeo' ? (
+							<Icon name="social-vimeo" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+						{social?.socialSite == 'yelp' ? (
+							<Icon name="social-yelp" class="h-9 w-9" aria-hidden="true" />
+						) : null}
+					</a>
+				</li>
+			)
+		})
+	}
+</ul>

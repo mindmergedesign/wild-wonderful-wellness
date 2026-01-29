@@ -1,0 +1,28 @@
+---
+// Packages
+import PortableText from '@/components/elements/content/PortableText.astro'
+
+// Components
+import Container from '@/components/layout/Container.astro'
+import Section from '@/components/layout/Section.astro'
+import Layout from '@/layouts/Layout.astro'
+
+// Types
+import type { Home } from '@/sanity/schemaTypes/home'
+
+// Misc
+import { home } from '@/sanity/lib/queries'
+
+// Type the page variable with the Home interface to enable TypeScript completion
+const page = home as Home
+---
+
+<Layout>
+	<main id="main-content">
+		<Section id="intro">
+			<Container>
+				<PortableText portableText={page?.content} />
+			</Container>
+		</Section>
+	</main>
+</Layout>

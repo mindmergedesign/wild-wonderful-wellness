@@ -1,0 +1,15 @@
+---
+// Packages
+import ImageAndText from '@/components/elements/content/ImageAndText.astro'
+import type { ImageAndText as ImageAndTextType } from '@/sanity/schemaTypes/imageAndText'
+
+interface Props {
+	block: ImageAndTextType
+	class?: string
+}
+
+// Misc
+const { block, class: className } = Astro.props as Props
+---
+
+<ImageAndText content={block} />

@@ -1,0 +1,61 @@
+---
+// Packages
+import { loadQuery } from '@/sanity/lib/load-query'
+import { settings } from '@/sanity/lib/queries'
+import { urlForImage } from '@/sanity/lib/urlForImage'
+import type { SanityDocument } from '@sanity/client'
+import { SEO } from 'astro-seo'
+
+// Components
+import PageBuilder from '@/components/elements/page-builder/PageBuilder.astro'
+import Layout from '@/layouts/Layout.astro'
+
+// Misc
+export async function getStaticPaths() {
+	const { data: genericPages } = await loadQuery<SanityDocument[]>({
+		query: `*[_type == "generic"]`
+	})
+
+	return genericPages.map(({ slug }) => {
+		return {
+			params: {
+				slug: slug.current
+			}
+		}
+	})
+}
+
+const { params } = Astro
+
+// Check if preview mode is enabled
+const previewCookie = Astro.cookies.get('sanity-preview')
+const isPreview = previewCookie?.value === 'true'
+
+const { data: page } = await loadQuery<{ title: string; body: any[] }>({
+	query: `*[_type == "generic" && slug.current == $slug][0]`,
+	params,
+	preview: isPreview
+})
+---
+
+<Layout>
+	<SEO
+		title={`${page?.title} | ${settings?.siteName}`}
+		description={page?.title || ' '}
+		openGraph={{
+			basic: {
+				title: `${
+					page?.title + ' | ' + settings?.siteName || page?.title + ' | ' + settings?.siteName
+				}`,
+
+				type: 'website',
+				image: settings?.sharingImage ? urlForImage(settings.sharingImage).url() : ''
+			}
+		}}
+		slot="head"
+	/>
+
+	<main id="main-content">
+		<PageBuilder pageBuilder={page?.pageBuilder} />
+	</main>
+</Layout>
